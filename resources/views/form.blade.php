@@ -111,6 +111,9 @@
         $('#userForm').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
                 data: $(this).serialize(),
                 url: '{{ route("store.form") }}',
                 method: 'post',
