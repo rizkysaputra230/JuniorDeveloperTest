@@ -19,78 +19,55 @@ class FormController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+     *<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Form;
+use Illuminate\Http\Request;
+use Validator;
+
+class FormController extends Controller
+{
+
+    public function index()
     {
-        //
+        return view('form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:25',
             'last_name' => 'required|max:25',
-            'username' => 'required|max:50',
-            'gender' => 'required',
-            'birth' => 'required',
+            'username' => 'required|max:50|unique:form',
+            'gender' => 'required|max:10',
+            'birth_date' => 'required|date',
+            'terms' => 'required',
         ]);
-        if ($validator->passes()) {
-            return response()->json(['success'=>'Added New Record']);
+
+        if (!$validator->passes()) {
+            $output = [
+                'message' => $validator->errors()->all()
+            ];
+            return response()->json($output, 422);
         }
-     
-        return response()->json(['error'=>$validator->errors()->all()]);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $data = new Form();
+        $data->first_name = $request->input('first_name');
+        $data->last_name = $request->input('last_name');
+        $data->username = $request->input('username');
+        $data->gender = $request->input('gender');
+        $data->birth_date = $request->input('birth_date');
+        $data->is_agreed = $request->input('terms') ? 1 : 0;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $data->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $output = [
+            'message' => 'Success',
+            'error' => $validator->errors()->all()
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json($output, 200);
     }
 }
