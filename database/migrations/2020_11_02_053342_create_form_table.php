@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Schema;
 class CreateFormTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('form', function (Blueprint $table) {
@@ -19,16 +19,17 @@ class CreateFormTable extends Migration
             $table->string('last_name', 25);
             $table->string('username', 25)->unique();
             $table->string('gender');
-            $table->date('birth');
+            $table->date('birth_date');
+            $table->tinyInteger('is_agreed');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('form');
