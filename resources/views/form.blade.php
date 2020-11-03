@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Form</title>
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css">
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
@@ -26,19 +27,19 @@
                             </div>
 
                             <form action="" method="post">
-                            <!-- {{ csrf_field() }} -->
+                            {{ csrf_field() }}
 
                                 <div class="form-group">
                                     <label for="first_name">First Name</label>
-                                    <input class="form-control" type="text" name="first_name" value="">
+                                    <input class="form-control" type="text" name="first_name">
                                 </div>
                                 <div class="form-group">
                                     <label for="last_name">Last Name</label>
-                                    <input class="form-control" type="text" name="last_name" value="">
+                                    <input class="form-control" type="text" name="last_name">
                                 </div>
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input class="form-control" type="text" name="username" value="">
+                                    <input class="form-control" type="text" name="username">
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Gender</label>&emsp; &emsp;
@@ -47,7 +48,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="birth">Birth Date</label>
-                                    <input class="form-control" type="text" name="birth" value="" id="date">
+                                    <input class="form-control" type="text" name="birth" id="date">
                                 </div>
                                 <div class="form-group">
                                     <input type="checkbox" name="agreement" value="agree" /> I Agree with <a href="#">Terms</a> and <a href="#">Condition</a><br />
@@ -73,6 +74,7 @@
         $(".btn-submit").click(function(e){
             e.preventDefault();
 
+            var _token = $("input[name='_token']").val();
             var first_name = $("input[name='first_name']").val();
             var last_name = $("input[name='last_name']").val();
             var username = $("input[name='username']").val();
@@ -82,7 +84,7 @@
             $.ajax({
                 url: "{{ route('store.form') }}",
                 type:'POST',
-                data: {first_name:first_name, last_name:last_name, username:username, gender:gender, birth:birth},
+                data: {_token:_token, first_name:first_name, last_name:last_name, username:username, gender:gender, birth:birth},
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
                         alert(data.success);
