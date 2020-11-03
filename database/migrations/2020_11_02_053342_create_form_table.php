@@ -18,7 +18,7 @@ class CreateFormTable extends Migration
             $table->string('first_name', 25);
             $table->string('last_name', 25);
             $table->string('username', 25)->unique();
-            $table->enum('gender',['male', 'female'])->default('male');
+            $table->string('gender');
             $table->date('birth');
             $table->timestamps();
         });

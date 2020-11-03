@@ -8,9 +8,10 @@
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css">
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
 
@@ -20,8 +21,12 @@
                     <div class="card mt-5">
                         <div class="card-body">
 
+                            <div class="alert alert-danger print-error-msg" style="display:none">
+                                <ul></ul>
+                            </div>
+
                             <form action="" method="post">
-                            {{ csrf_field() }}
+                            <!-- {{ csrf_field() }} -->
 
                                 <div class="form-group">
                                     <label for="first_name">First Name</label>
@@ -41,8 +46,11 @@
                                     <input  type="radio" name="gender" value="female">&emsp; Female
                                 </div>
                                 <div class="form-group">
-                                    <label for="date">Birth Date</label>
-                                    <input class="form-control" type="text" name="date" value="" id="date">
+                                    <label for="birth">Birth Date</label>
+                                    <input class="form-control" type="text" name="birth" value="" id="date">
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox" name="agreement" value="agree" /> I Agree with <a href="#">Terms</a> and <a href="#">Condition</a><br />
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-primary btn-submit" type="submit" value="Submit">
@@ -64,17 +72,17 @@
   $(document).ready(function() {
         $(".btn-submit").click(function(e){
             e.preventDefault();
-       
+
             var first_name = $("input[name='first_name']").val();
             var last_name = $("input[name='last_name']").val();
             var username = $("input[name='username']").val();
             var gender = $("input[name='gender']").val();
-            var date = $("input[name='date']").val();
+            var birth = $("input[name='birth']").val();
        
             $.ajax({
-                url: "{{ route('my.form') }}",
+                url: "{{ route('store.form') }}",
                 type:'POST',
-                data: {first_name:first_name, last_name:last_name, username:username, gender:gender, date:date},
+                data: {first_name:first_name, last_name:last_name, username:username, gender:gender, birth:birth},
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
                         alert(data.success);
@@ -85,6 +93,16 @@
             });
        
         }); 
+
+        function printErrorMsg (msg) {
+            $(".print-error-msg").find("ul").html('');
+            $(".print-error-msg").css('display','block');
+            $.each( msg, function( key, value ) {
+                $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
+    });
+
 </script>
 </body>
 </html>
