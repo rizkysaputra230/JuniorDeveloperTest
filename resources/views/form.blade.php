@@ -6,105 +6,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Form</title>
-
-    <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css">
-    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <style media="screen">
+        .register {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.175);
+            border: none;
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .btn-primary:not(:disabled):not(.disabled):active:focus.btn-primary:not(:disabled):not(.disabled):active:focus {
+            box-shadow: none;
+        }
+        .btn:disabled {
+            background-color: #e6e7e8 !important;
+            color: #aaa !important;
+            border: none !important;
+        }
+        .form-control {
+            border-radius: 8px;
+            outline: none !important;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+    <div class="register">
+        <div class="col-lg-4 col-10 mx-auto">
+            <div class="card">
+                <div class="alert alert-danger error-messages" style="display:none">
+                    <ul></ul>
+                </div>
+                <form id="userForm" method="post">
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="card mt-5">
-                        <div class="card-body">
 
-                            <div class="alert alert-danger print-error-msg" style="display:none">
-                                <ul></ul>
-                            </div>
-
-                            <form action="" method="post">
-                            {{ csrf_field() }}
-
-                                <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input class="form-control" type="text" name="first_name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input class="form-control" type="text" name="last_name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input class="form-control" type="text" name="username">
-                                </div>
-                                <div class="form-group">
-                                    <label for="gender">Gender</label>&emsp; &emsp;
-                                    <input  type="radio" name="gender" value="male">&emsp; Male &emsp; &emsp;
-                                    <input  type="radio" name="gender" value="female">&emsp; Female
-                                </div>
-                                <div class="form-group">
-                                    <label for="birth">Birth Date</label>
-                                    <input class="form-control" type="text" name="birth" id="date">
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" name="agreement" value="agree" /> I Agree with <a href="#">Terms</a> and <a href="#">Condition</a><br />
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-primary btn-submit" type="submit" value="Submit">
-                                </div>
-                            </form>
-
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input class="form-control" type="text" name="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input class="form-control" type="text" name="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" type="text" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="maleOption" value="male">
+                            <label class="form-check-label" for="maleOption">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="femaleOption" value="female">
+                            <label class="form-check-label" for="femaleOption">
+                                Female
+                            </label>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="birth">Birth Date</label>
+                        <input class="form-control" type="date" name="birth_date">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="terms" id="tncCheck" value="1">
+                            <label class="form-check-label" for="tncCheck">
+                                I Agree with <a href="#">Terms</a> and <a href="#">Condition</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ csrf_field() }}
+                        <button class="btn btn-primary btn-block" type="submit">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
-<script>
-  $( function() {
-    $( "#date" ).datepicker({
-      dateFormat: "dd-mm-yy"
-    });
-  } );
-
-  $(document).ready(function() {
-        $(".btn-submit").click(function(e){
+    </div>
+    <script>
+        $('#userForm').on('submit', function (e) {
             e.preventDefault();
-
-            var _token = $("input[name='_token']").val();
-            var first_name = $("input[name='first_name']").val();
-            var last_name = $("input[name='last_name']").val();
-            var username = $("input[name='username']").val();
-            var gender = $("input[name='gender']").val();
-            var birth = $("input[name='birth']").val();
-       
             $.ajax({
-                url: "{{ route('store.form') }}",
-                type:'POST',
-                data: {_token:_token, first_name:first_name, last_name:last_name, username:username, gender:gender, birth:birth},
-                success: function(data) {
-                    if($.isEmptyObject(data.error)){
-                        alert(data.success);
-                    }else{
-                        printErrorMsg(data.error);
-                    }
+                data: $(this).serialize(),
+                url: '{{ route("store.form") }}',
+                method: 'post',
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#userForm [type="submit"]').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('.error-messages ul').html('');
+                    $('.error-messages').fadeOut();
+                    $('#userForm input').val('');
+                    setTimeout(function () {
+                        $('#userForm [type="submit"]').prop('disabled', false);
+                    }, 1000);
+                    alert(response.message);
+                },
+                error: function (xhr) {
+                    printErrorMsg(xhr.responseJSON.message);
+                    setTimeout(function () {
+                        $('#userForm [type="submit"]').prop('disabled', false);
+                    }, 1000);
+                },
+                failed: function () {
+                    setTimeout(function () {
+                        $('#userForm [type="submit"]').prop('disabled', false);
+                    }, 1000);
                 }
             });
-       
-        }); 
+        });
 
-        function printErrorMsg (msg) {
-            $(".print-error-msg").find("ul").html('');
-            $(".print-error-msg").css('display','block');
-            $.each( msg, function( key, value ) {
-                $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-            });
+        function printErrorMsg(error) {
+            $('.error-messages ul').html('');
+            for (var i = 0; i < error.length; i++) {
+                $('.error-messages ul').append('<li>' + error[i] + '</li>');
+            }
+            $('.error-messages').fadeIn();
         }
-    });
-
-</script>
+    </script>
 </body>
 </html>
