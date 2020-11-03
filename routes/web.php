@@ -16,4 +16,4 @@ use App\Http\Controllers\FormController;
 */
 
 Route::get('form', [FormController::class, 'index']);
-Route::post('form', [HomeController::class, 'store'])->name('store.form');
+Route::post('form', [FormController::class, 'store'])->name('store.form');
